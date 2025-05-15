@@ -1,24 +1,37 @@
-# README
+# 📅 Scheduler App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A web-based task scheduling application designed to help users plan, track, and manage their daily activities more effectively. Built with a modern tech stack including Ruby on Rails, PostgreSQL, and a clean frontend using HTML, CSS, and JavaScript.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 🌟 Features
 
-* System dependencies
+### 📝 Task Management
+- Create, update, and delete tasks
+- Assign due dates and priorities
+- Organize tasks by categories or tags
 
-* Configuration
+### ⏰ Reminders & Deadlines
+- Schedule due dates and receive alerts for upcoming tasks
 
-* Database creation
+### 📊 Dashboard Overview
+- Visual overview of your scheduled tasks
+- Filter by today, week, or all tasks
 
-* Database initialization
+### 🌐 User Experience
+- Minimal, intuitive UI with a focus on usability
 
-* How to run the test suite
+---
 
-* Services (job queues, cache servers, search engines, etc.)
+## 🛠️ Tech Stack
 
-* Deployment instructions
+| Layer         | Technology              |
+|---------------|--------------------------|
+| **Frontend**  | HTML, CSS, JavaScript    |
+| **Backend**   | Ruby on Rails (RoR)      |
+| **Database**  | PostgreSQL               |
+| **Versioning**| Git, GitHub              |
 
-* ...
+---
+
+
