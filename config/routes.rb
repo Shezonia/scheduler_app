@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Root route — serve Frontend index.html
-  root 'frontend#index'
+  root "frontend#index"
 end
