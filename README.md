@@ -38,7 +38,7 @@ SUBMISSION 1 (FRONT-END)
 
  User Authentication
 
- ❌ Multi-Platform IntegrationMulti-Platform Integration
+ ❌ Multi-Platform Integration
 
  Scheduler
 
