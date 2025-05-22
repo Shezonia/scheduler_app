@@ -34,5 +34,22 @@ A web-based task scheduling application designed to help users plan, track, and 
 
 ---
 
+SUBMISSION 1 (FRONT-END)
+
+ User Authentication
+
+ ❌ Multi-Platform Integration
+
+ Scheduler
+
+ Content Calendar
+
+ Post Drafts
+
+ Responsive Dashboard
+
+ Database Integration (PostgreSQL)
+
+
 
 
