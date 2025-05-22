@@ -1,97 +1,100 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const baseURL = "http://localhost:3000";
+  const signupURL = `${baseURL}/signup`;
+  const loginURL = `${baseURL}/login`;
+  const spinner = document.getElementById("spinner");
 
+  // Signup form submission
+  const signupForm = document.getElementById("SignupForm");
+  signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  spinner.style.display = "flex";
 
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("cnfpass").value;
 
-const EventBaseURL = `https://my-cal-com-backend.vercel.app`;
-
-const usersUrl = `${EventBaseURL}/users`;
-const signinUrl = `${usersUrl}/register`;
-const loginUrl = `${usersUrl}/login`;
-
-let SignupForm = document.getElementById("SignupForm")
-SignupForm.addEventListener("submit", (e) => {
-  e.preventDefault()
-  spinner.style.display = "flex"; //!Spinner
-  let password = document.getElementById("password").value;
-  let cnf_pass = document.getElementById("cnfpass").value;
-  if (password != cnf_pass) {
-    swal("Check Password!", "Passwords dosen't match", "warning");
-    spinner.style.display = "none"; //!Spinner
+  if (password !== confirmPassword) {
+    swal("Check Password!", "Passwords don't match", "warning");
+    spinner.style.display = "none";
     return;
   }
-  let userdetails = {
-    name: SignupForm.name.value,
-    email: SignupForm.email.value,
-    password: SignupForm.password.value,
-  };
-  Postusers(userdetails);
-})
 
-async function Postusers(obj) {
-  spinner.style.display = "flex"; //!Spinner
+  const userDetails = {
+    user: {
+      name: SignupForm.name.value.trim(),
+      email: SignupForm.email.value.trim(),
+      password: password,
+      password_confirmation: confirmPassword
+    }
+  };
+
+  console.log("Sending signup request with data:", userDetails);
+
   try {
-    const res = await fetch(signinUrl, {
+    const res = await fetch(signupURL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userDetails),
     });
+
+    console.log("Received response status:", res.status);
+
     if (res.ok) {
-      spinner.style.display = "none"; //!Spinner
+      const data = await res.json();
+      console.log("Signup success response data:", data);
       swal("Signup Successful", "Please Login", "success");
+      SignupForm.reset();
     } else {
-      spinner.style.display = "none"; //!Spinner
-      swal("Error", "Bad request", "error");
+      const errData = await res.json().catch(() => ({}));
+      console.error("Signup failed response data:", errData);
+      swal("Signup Failed", errData.message || "Bad request", "error");
     }
   } catch (error) {
-    spinner.style.display = "none"; //!Spinner
+    console.error("Fetch signup error:", error);
     swal("Error", "Something went wrong", "error");
-    console.log(`Error in Posting`);
+  } finally {
+    spinner.style.display = "none";
   }
-}
-
-let LoginForm = document.getElementById("LoginForm")
-LoginForm.addEventListener("submit", (e) => {
-  spinner.style.display = "flex"; //!Spinner
-  e.preventDefault()
-  let loginDetails = {
-    email: LoginForm.login_email.value,
-    password: LoginForm.login_pass.value,
-  }
-  console.log(loginDetails);
-  login_user(loginDetails);
-})
+});
 
 
-let login_user = async (obj) => {
-  spinner.style.display = "flex"; //!Spinner
-  let res = await fetch(`${EventBaseURL}/users/login`, {
-    method: "POST",
-    body: JSON.stringify(obj),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
-  );
-  if (res.ok) {
-    let LoginData = await res.json();
-    if (LoginData.success == false) {
-      swal("Login Failed", "Wrong Credentials", "error");
-      spinner.style.display = "none"; //!Spinner
-      return;
+  // Login form submission
+  const loginForm = document.getElementById("LoginForm");
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    spinner.style.display = "flex";
+
+    const loginDetails = {
+      email: loginForm.login_email.value.trim(),
+      password: loginForm.login_pass.value,
+    };
+
+    try {
+      const res = await fetch(loginURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginDetails),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        swal("Login Successful", "Redirecting to Dashboard...", "success");
+
+        localStorage.setItem("username", data.user.name);
+        localStorage.setItem("useremail", data.user.email);
+
+        setTimeout(() => {
+          window.location.href = "Dashboard.html";
+        }, 1000);
+      } else {
+        const errData = await res.json();
+        swal("Login Failed", errData.message || "Invalid credentials", "error");
+      }
+    } catch (error) {
+      swal("Error", "Something went wrong", "error");
+      console.error("Login error:", error);
+    } finally {
+      spinner.style.display = "none";
     }
-    // console.log(LoginData);
-    localStorage.setItem("accessToken", LoginData.token);
-    localStorage.setItem("username", LoginData.name);
-    localStorage.setItem("useremail", LoginData.email);
-
-    if (LoginData.token) {
-      spinner.style.display = "none"; //!Spinner
-      swal("Login Successful", "Redirecting to Dashboard...", "success");
-      setTimeout(() => {
-        spinner.style.display = "none"; //!Spinner
-        window.location.href = "Dashboard.html";
-      }, 1000);
-    }
-  }
-};
+  });
+});

@@ -1,10 +1,8 @@
-let EventBaseURL = `https://my-cal-com-backend.vercel.app`
-
+let EventBaseURL = `http://localhost:3001`;
 
 var navbar = document.getElementById("sticky");
 var sticky = navbar.offsetTop;
 let spaceNav = document.getElementById("spaceNav")
-
 
 //! IF USER NOT PRESENT ---> 
 let UserEmail = localStorage.getItem("useremail");
@@ -16,7 +14,6 @@ if (!UserEmail) {
   }, 2000);
 }
 //! ---------------------->
-
 
 window.onscroll = () => {
   if (window.pageYOffset >= sticky) {
@@ -43,7 +40,6 @@ create.addEventListener("click", () => {
   window.location.assign("../create.html");
 });
 
-
 FetchAllUserEvents(UserEmail);
 
 async function FetchAllUserEvents(UserEmail) {
@@ -55,8 +51,7 @@ async function FetchAllUserEvents(UserEmail) {
       headers: {
         "Content-Type": "application/json"
       }
-    }
-    );
+    });
 
     if (response.ok) {
       let Data = await response.json();
@@ -96,11 +91,9 @@ function RenderData(data) {
   })
   AllEventsContainer.innerHTML = AllEvents.join("")
 
-
   let Deleters = document.querySelectorAll(".Deleter");
   for (let i = 0; i < Deleters.length; i++) {
     Deleters[i].addEventListener("click", (e) => {
-
       swal({
         title: "Delete This Event?",
         text: "Once deleted, you will not be getting notifications for this event",
@@ -130,8 +123,7 @@ async function DeleteEvent(id) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email: UserEmail, id }),
-    }
-    );
+    });
     if (res.ok) {
       spinner.style.display = "none"; //!Spinner
       swal("Event Deleted Successfully", "Your event has been Deleted", "info");
@@ -148,6 +140,7 @@ async function DeleteEvent(id) {
     console.log(err);
   }
 }
+
 let Logout = document.getElementsByClassName("namecircle")[0];
 Logout.addEventListener("click", () => {
   swal("Logging Out..", "", "info");

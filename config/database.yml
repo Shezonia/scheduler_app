@@ -20,23 +20,23 @@ default: &default
 development:
   <<: *default
   database: scheduler_app_development
-  username: shezonia
-  password: database
+  username: postgres
+  password: super09#
   host: localhost
   port: 5432
 
 test:
   <<: *default
   database: scheduler_app_test
-  username: shezonia
-  password: database
+  username: postgres
+  password: super09#
   host: localhost
   port: 5432
 
 production:
   <<: *default
   database: scheduler_app_production
-  username: shezonia
-  password: database
+  username: postgres
+  password: super09#
   host: localhost
   port: 5432
