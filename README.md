@@ -1,4 +1,4 @@
-# 📅 Scheduler App – Frontend
+# 📅 Scheduler App 
 
 A web-based task scheduling interface designed to help users plan, track, and manage their daily activities with a clean, minimal user experience.
 
